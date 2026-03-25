@@ -232,11 +232,21 @@ final class MultipeerBoardService: NSObject, PeerBoardServicing {
         decoder.dateDecodingStrategy = .iso8601
         return try decoder.decode(PeerBoardPayload.self, from: data)
     }
+
+    private static func errorMessage(for error: Error, activity: String) -> String {
+        let nsError = error as NSError
+
+        if nsError.domain == NetService.errorDomain, nsError.code == -72008 {
+            return "\(activity) failed because iOS blocked local network Bonjour access. Reinstall the app or enable Signal Board in Settings > Privacy & Security > Local Network, then try again."
+        }
+
+        return "\(activity) failed (\(nsError.domain) \(nsError.code)): \(nsError.localizedDescription)"
+    }
 }
 
 extension MultipeerBoardService: MCNearbyServiceAdvertiserDelegate {
     func advertiser(_ advertiser: MCNearbyServiceAdvertiser, didNotStartAdvertisingPeer error: Error) {
-        emit(.error("Advertising failed: \(error.localizedDescription)"))
+        emit(.error(Self.errorMessage(for: error, activity: "Advertising")))
     }
 
     func advertiser(
@@ -257,7 +267,7 @@ extension MultipeerBoardService: MCNearbyServiceAdvertiserDelegate {
 
 extension MultipeerBoardService: MCNearbyServiceBrowserDelegate {
     func browser(_ browser: MCNearbyServiceBrowser, didNotStartBrowsingForPeers error: Error) {
-        emit(.error("Browsing failed: \(error.localizedDescription)"))
+        emit(.error(Self.errorMessage(for: error, activity: "Browsing")))
     }
 
     func browser(_ browser: MCNearbyServiceBrowser, foundPeer peerID: MCPeerID, withDiscoveryInfo info: [String: String]?) {

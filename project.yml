@@ -21,6 +21,7 @@ targets:
         INFOPLIST_KEY_NSLocalNetworkUsageDescription: Signal Board uses Multipeer Connectivity to discover and sync nearby shared notes.
         INFOPLIST_KEY_NSBonjourServices:
           - _peer-board._tcp
+          - _peer-board._udp
     scheme:
       testTargets:
         - SignalBoardTests
