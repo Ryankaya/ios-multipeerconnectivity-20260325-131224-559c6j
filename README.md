@@ -21,6 +21,7 @@ Signal Board is a SwiftUI iOS app that turns nearby devices into a lightweight s
 - Automatically accepts inbound invitations for low-friction collaboration.
 - Syncs sticky-note style posts across connected peers using JSON payloads.
 - Keeps local notes available even when no peers are connected.
+- Includes a no-network fallback: export/import board snapshots as shareable tokens.
 - Includes a testable view model with a mock collaboration service.
 
 ## Build

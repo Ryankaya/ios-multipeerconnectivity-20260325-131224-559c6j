@@ -81,6 +81,43 @@ final class PeerBoardViewModelTests: XCTestCase {
 
         XCTAssertTrue(viewModel.shouldOfferSettingsShortcut)
     }
+
+    func testSnapshotExportAndImportRoundTripMergesNotes() {
+        let serviceA = MockPeerBoardService()
+        let defaultsA = UserDefaults(suiteName: UUID().uuidString)!
+        let viewModelA = PeerBoardViewModel(
+            service: serviceA,
+            identityStore: IdentityStore(defaults: defaultsA)
+        )
+
+        viewModelA.displayName = "Avery"
+        viewModelA.start()
+        viewModelA.draftText = "Bring power strips"
+        viewModelA.postNote()
+
+        let serviceB = MockPeerBoardService()
+        let defaultsB = UserDefaults(suiteName: UUID().uuidString)!
+        let viewModelB = PeerBoardViewModel(
+            service: serviceB,
+            identityStore: IdentityStore(defaults: defaultsB)
+        )
+
+        viewModelB.displayName = "Jordan"
+        viewModelB.start()
+        viewModelB.draftText = "Bring snacks"
+        viewModelB.postNote()
+
+        let shareToken = viewModelA.snapshotShareText
+        XCTAssertFalse(shareToken.isEmpty)
+
+        viewModelB.importSnapshotText = shareToken
+        viewModelB.importSnapshot()
+
+        XCTAssertTrue(viewModelB.importSnapshotText.isEmpty)
+        XCTAssertEqual(viewModelB.notes.count, 2)
+        XCTAssertTrue(viewModelB.notes.contains { $0.text == "Bring power strips" })
+        XCTAssertTrue(viewModelB.notes.contains { $0.text == "Bring snacks" })
+    }
 }
 
 private final class MockPeerBoardService: PeerBoardServicing {

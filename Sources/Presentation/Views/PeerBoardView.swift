@@ -20,6 +20,7 @@ struct PeerBoardView: View {
                     heroCard
                     composerCard
                     peersCard
+                    fallbackSharingCard
                     boardSection
                 }
                 .padding(20)
@@ -211,6 +212,68 @@ struct PeerBoardView: View {
         .background(cardBackground)
     }
 
+    private var fallbackSharingCard: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Label("No-network board sharing", systemImage: "arrow.triangle.2.circlepath.circle.fill")
+                .font(.headline)
+                .foregroundStyle(Color.textPrimary)
+
+            Text("If iOS blocks Local Network permission, share your board snapshot manually. One device exports a token, another device pastes and imports it.")
+                .font(.subheadline)
+                .foregroundStyle(Color.textSecondary)
+
+            HStack(spacing: 10) {
+                ShareLink(item: viewModel.snapshotShareText) {
+                    Label("Share Snapshot", systemImage: "square.and.arrow.up")
+                        .font(.subheadline.weight(.semibold))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(.sunrise)
+                .disabled(!viewModel.canShareSnapshot)
+
+                Button {
+                    copySnapshotToPasteboard()
+                } label: {
+                    Label("Copy Token", systemImage: "doc.on.doc.fill")
+                        .font(.subheadline.weight(.semibold))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.bordered)
+                .disabled(!viewModel.canShareSnapshot)
+            }
+
+            TextEditor(text: $viewModel.importSnapshotText)
+                .foregroundStyle(Color.textPrimary)
+                .tint(Color.controlInk)
+                .frame(minHeight: 90)
+                .padding(12)
+                .background(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .fill(Color.inputSurface)
+                )
+                .scrollContentBackground(.hidden)
+
+            Button(action: viewModel.importSnapshot) {
+                Label("Import Snapshot", systemImage: "square.and.arrow.down.fill")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background(
+                        RoundedRectangle(cornerRadius: 18, style: .continuous)
+                            .fill(Color.sky)
+                    )
+                    .foregroundStyle(Color.onAccent)
+            }
+            .disabled(!viewModel.canImportSnapshot)
+            .opacity(viewModel.canImportSnapshot ? 1 : 0.55)
+        }
+        .padding(20)
+        .background(cardBackground)
+    }
+
     private var boardSection: some View {
         VStack(alignment: .leading, spacing: 16) {
             Label("Shared board", systemImage: "rectangle.grid.2x2.fill")
@@ -318,6 +381,15 @@ struct PeerBoardView: View {
         }
 
         openURL(settingsURL)
+    }
+
+    private func copySnapshotToPasteboard() {
+        guard viewModel.canShareSnapshot else {
+            return
+        }
+
+        UIPasteboard.general.string = viewModel.snapshotShareText
+        viewModel.markSnapshotCopied()
     }
 
     private var errorBinding: Binding<Bool> {

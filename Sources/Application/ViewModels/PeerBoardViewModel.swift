@@ -2,8 +2,11 @@ import Foundation
 
 @MainActor
 final class PeerBoardViewModel: ObservableObject {
+    private static let snapshotPrefix = "signalboard://snapshot/"
+
     @Published var displayName: String
     @Published var draftText = ""
+    @Published var importSnapshotText = ""
     @Published private(set) var discoveredPeers: [PeerDevice] = []
     @Published private(set) var connectedPeers: [PeerDevice] = []
     @Published private(set) var notes: [BoardNote] = []
@@ -40,6 +43,30 @@ final class PeerBoardViewModel: ObservableObject {
 
     var canPost: Bool {
         !draftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    var canShareSnapshot: Bool {
+        !notes.isEmpty
+    }
+
+    var canImportSnapshot: Bool {
+        !importSnapshotText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    var snapshotShareText: String {
+        guard !notes.isEmpty else {
+            return ""
+        }
+
+        do {
+            let payload = PeerBoardPayload.snapshot(notes)
+            let encoder = JSONEncoder()
+            encoder.dateEncodingStrategy = .iso8601
+            let data = try encoder.encode(payload)
+            return Self.snapshotPrefix + data.base64EncodedString()
+        } catch {
+            return ""
+        }
     }
 
     var shouldOfferSettingsShortcut: Bool {
@@ -103,6 +130,46 @@ final class PeerBoardViewModel: ObservableObject {
         errorMessage = nil
     }
 
+    func markSnapshotCopied() {
+        statusHeadline = "Snapshot copied"
+        statusDetail = "Paste this snapshot token on another device to import your board."
+    }
+
+    func importSnapshot() {
+        let trimmed = importSnapshotText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            return
+        }
+
+        do {
+            let rawToken: String
+            if trimmed.hasPrefix(Self.snapshotPrefix) {
+                rawToken = String(trimmed.dropFirst(Self.snapshotPrefix.count))
+            } else {
+                rawToken = trimmed
+            }
+
+            guard let data = Data(base64Encoded: rawToken) else {
+                throw SnapshotError.invalidFormat
+            }
+
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
+            let payload = try decoder.decode(PeerBoardPayload.self, from: data)
+
+            guard payload.kind == .snapshot, let imported = payload.notes else {
+                throw SnapshotError.invalidFormat
+            }
+
+            mergeImportedNotes(imported)
+            importSnapshotText = ""
+            statusHeadline = "Snapshot imported"
+            statusDetail = "Merged \(imported.count) shared note(s) into this board."
+        } catch {
+            errorMessage = "Unable to import this snapshot. Paste a valid Signal Board snapshot token."
+        }
+    }
+
     private func handle(_ event: PeerBoardServiceEvent) {
         switch event {
         case let .sessionChanged(isRunning, localPeerName):
@@ -128,4 +195,17 @@ final class PeerBoardViewModel: ObservableObject {
         let trimmed = displayName.trimmingCharacters(in: .whitespacesAndNewlines)
         return trimmed.isEmpty ? "Signal Board Host" : trimmed
     }
+
+    private func mergeImportedNotes(_ importedNotes: [BoardNote]) {
+        var byID = Dictionary(uniqueKeysWithValues: notes.map { ($0.id, $0) })
+        for note in importedNotes {
+            byID[note.id] = note
+        }
+
+        notes = Array(byID.values).sorted { $0.createdAt > $1.createdAt }
+    }
+}
+
+private enum SnapshotError: Error {
+    case invalidFormat
 }
