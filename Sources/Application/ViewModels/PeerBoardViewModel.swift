@@ -48,7 +48,11 @@ final class PeerBoardViewModel: ObservableObject {
         }
 
         let normalized = errorMessage.lowercased()
-        return normalized.contains("local network") || normalized.contains("bonjour")
+        return normalized.contains("local network")
+            || normalized.contains("bonjour")
+            || normalized.contains("noauth")
+            || normalized.contains("-65555")
+            || normalized.contains("network.nwerror")
     }
 
     func toggleSession() {

@@ -68,6 +68,19 @@ final class PeerBoardViewModelTests: XCTestCase {
 
         XCTAssertTrue(viewModel.shouldOfferSettingsShortcut)
     }
+
+    func testNoAuthNetworkErrorOffersSettingsShortcut() {
+        let service = MockPeerBoardService()
+        let defaults = UserDefaults(suiteName: UUID().uuidString)!
+        let viewModel = PeerBoardViewModel(
+            service: service,
+            identityStore: IdentityStore(defaults: defaults)
+        )
+
+        service.emit(.error("Advertising failed (Network.NWError -65555): The operation couldn't be completed. (Network.NWError error -65555 - NoAuth)"))
+
+        XCTAssertTrue(viewModel.shouldOfferSettingsShortcut)
+    }
 }
 
 private final class MockPeerBoardService: PeerBoardServicing {

@@ -265,7 +265,7 @@ final class MultipeerBoardService: NSObject, PeerBoardServicing {
         let nsError = error as NSError
 
         if isLocalNetworkPermissionError(error) {
-            return "\(activity) failed because Signal Board does not currently have Bonjour/local network access. Tap Settings below to enable Local Network. If the toggle is missing, delete and reinstall the app, then try Go Live again."
+            return "Signal Board cannot start nearby sharing until iOS grants Local Network access. Tap Settings below and enable Local Network. If Signal Board still does not appear there, delete the app, reinstall it, and tap Go Live Nearby again to force the permission prompt."
         }
 
         return "\(activity) failed (\(nsError.domain) \(nsError.code)): \(nsError.localizedDescription)"
@@ -277,12 +277,21 @@ final class MultipeerBoardService: NSObject, PeerBoardServicing {
             return true
         }
 
+        if nsError.domain == "Network.NWError", localNetworkDNSFailureCodes.contains(nsError.code) {
+            return true
+        }
+
         if let nwError = error as? NWError, case .dns(let dnsError) = nwError {
-            return Int(dnsError) == -65570
+            return localNetworkDNSFailureCodes.contains(Int(dnsError))
         }
 
         return false
     }
+
+    private static let localNetworkDNSFailureCodes: Set<Int> = [
+        -65555, // kDNSServiceErr_NoAuth
+        -65570  // kDNSServiceErr_PolicyDenied
+    ]
 }
 
 extension MultipeerBoardService: MCNearbyServiceAdvertiserDelegate {

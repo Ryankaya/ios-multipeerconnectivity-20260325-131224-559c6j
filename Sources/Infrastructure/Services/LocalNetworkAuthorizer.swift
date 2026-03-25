@@ -40,7 +40,7 @@ final class LocalNetworkAuthorizer: NSObject {
             case .failed(let error):
                 self?.complete(with: .failure(error))
             case .waiting(let error):
-                if Self.isPolicyDenied(error) {
+                if Self.isPermissionDenied(error) {
                     self?.complete(with: .failure(error))
                 }
             default:
@@ -92,13 +92,18 @@ final class LocalNetworkAuthorizer: NSObject {
         }
     }
 
-    private static func isPolicyDenied(_ error: NWError) -> Bool {
+    private static func isPermissionDenied(_ error: NWError) -> Bool {
         if case .dns(let dnsError) = error {
-            return Int(dnsError) == -65570
+            return Self.localNetworkDNSFailureCodes.contains(Int(dnsError))
         }
 
         return false
     }
+
+    private static let localNetworkDNSFailureCodes: Set<Int> = [
+        -65555, // kDNSServiceErr_NoAuth
+        -65570  // kDNSServiceErr_PolicyDenied
+    ]
 }
 
 extension LocalNetworkAuthorizer: NetServiceDelegate {
