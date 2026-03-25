@@ -1,0 +1,515 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		057C17B64BFBB8CBDBA2464A /* MultipeerBoardService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D73AA2EF59B173725675626 /* MultipeerBoardService.swift */; };
+		0C4EDC7CF2750A5384F8524A /* PeerBoardServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DE3E263448482AB9890DD8 /* PeerBoardServicing.swift */; };
+		0C525291AF0D7157A0C2794E /* PeerBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4415454B6930E056764D356 /* PeerBoardView.swift */; };
+		1A1214CB105BF1AF958E75A5 /* IdentityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB866205E041D068A1CD5C7 /* IdentityStore.swift */; };
+		94D531CCEBEF07A2509CE82D /* PeerBoardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B94DBD45C1BB58A42917C5 /* PeerBoardViewModelTests.swift */; };
+		9DA6D25D4AC5A5E2587027A7 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714B4BC78654E94C3413BED0 /* AppContainer.swift */; };
+		A056025F49B8717E54F8C23C /* PeerBoardPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285892107D88275A40ECDF2F /* PeerBoardPayload.swift */; };
+		BA7A6AE97647392A88C514E7 /* SignalBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC441717C718AEDAC0059831 /* SignalBoardApp.swift */; };
+		CAE80660139AE1EAC5D0FAD3 /* PeerDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623B87FCDB46017A4F2F171B /* PeerDevice.swift */; };
+		E07EDBBBB0C4D107B1FDCC72 /* BoardNote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6029C3CB637AD03A8FD68232 /* BoardNote.swift */; };
+		E86C8C56F6C62872A5A32AF9 /* PeerBoardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39F79C6FB1F34833134AE9 /* PeerBoardViewModel.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		93343B1E78DED2437B02681A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 90E5D16A9FBBA8A3E9C972D6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2FFB7DB656E5F49326C85595;
+			remoteInfo = SignalBoard;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		285892107D88275A40ECDF2F /* PeerBoardPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerBoardPayload.swift; sourceTree = "<group>"; };
+		6029C3CB637AD03A8FD68232 /* BoardNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNote.swift; sourceTree = "<group>"; };
+		623B87FCDB46017A4F2F171B /* PeerDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerDevice.swift; sourceTree = "<group>"; };
+		6D73AA2EF59B173725675626 /* MultipeerBoardService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipeerBoardService.swift; sourceTree = "<group>"; };
+		714B4BC78654E94C3413BED0 /* AppContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContainer.swift; sourceTree = "<group>"; };
+		B6D9319902B1B715E76D8B7C /* SignalBoard.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SignalBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1B94DBD45C1BB58A42917C5 /* PeerBoardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerBoardViewModelTests.swift; sourceTree = "<group>"; };
+		C2DE3E263448482AB9890DD8 /* PeerBoardServicing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerBoardServicing.swift; sourceTree = "<group>"; };
+		DBB866205E041D068A1CD5C7 /* IdentityStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdentityStore.swift; sourceTree = "<group>"; };
+		DD39F79C6FB1F34833134AE9 /* PeerBoardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerBoardViewModel.swift; sourceTree = "<group>"; };
+		EB74BF2ED1D8B0C11CDB8CC6 /* SignalBoardTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SignalBoardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC441717C718AEDAC0059831 /* SignalBoardApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignalBoardApp.swift; sourceTree = "<group>"; };
+		F4415454B6930E056764D356 /* PeerBoardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerBoardView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		00EB439BF899042F5082FFA6 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				C2DE3E263448482AB9890DD8 /* PeerBoardServicing.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		28E293229DB302DD6127F2D2 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				55ED898E01DFD60681868A92 /* Views */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		307E2AA785F96DAA8DC1D428 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				DBB866205E041D068A1CD5C7 /* IdentityStore.swift */,
+				6D73AA2EF59B173725675626 /* MultipeerBoardService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		4713489EE7E4A0AFF4C5B1A5 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				FD4977F456AA6B0F9D76BDE4 /* ViewModels */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		55ED898E01DFD60681868A92 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F4415454B6930E056764D356 /* PeerBoardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		60653577B8DDB14358D774A0 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C1B94DBD45C1BB58A42917C5 /* PeerBoardViewModelTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		725A3601F07E234527338624 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				307E2AA785F96DAA8DC1D428 /* Services */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		87B6A5D564BF5206BD9673EE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				6029C3CB637AD03A8FD68232 /* BoardNote.swift */,
+				285892107D88275A40ECDF2F /* PeerBoardPayload.swift */,
+				623B87FCDB46017A4F2F171B /* PeerDevice.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		91212F7F3528D6FCBD12D12A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				714B4BC78654E94C3413BED0 /* AppContainer.swift */,
+				EC441717C718AEDAC0059831 /* SignalBoardApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		99F8FB1BDCA55CD524BED042 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				91212F7F3528D6FCBD12D12A /* App */,
+				4713489EE7E4A0AFF4C5B1A5 /* Application */,
+				9B36AAD905290CE4158C4C43 /* Domain */,
+				725A3601F07E234527338624 /* Infrastructure */,
+				28E293229DB302DD6127F2D2 /* Presentation */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		9B36AAD905290CE4158C4C43 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				87B6A5D564BF5206BD9673EE /* Models */,
+				00EB439BF899042F5082FFA6 /* Protocols */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		A529AAC4D3D0FD1397C544B4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B6D9319902B1B715E76D8B7C /* SignalBoard.app */,
+				EB74BF2ED1D8B0C11CDB8CC6 /* SignalBoardTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D5C7BA131AD665486DF0D530 = {
+			isa = PBXGroup;
+			children = (
+				99F8FB1BDCA55CD524BED042 /* Sources */,
+				60653577B8DDB14358D774A0 /* Tests */,
+				A529AAC4D3D0FD1397C544B4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FD4977F456AA6B0F9D76BDE4 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				DD39F79C6FB1F34833134AE9 /* PeerBoardViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2FFB7DB656E5F49326C85595 /* SignalBoard */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 38D2DA7A82BEEC17D9EA4E68 /* Build configuration list for PBXNativeTarget "SignalBoard" */;
+			buildPhases = (
+				8218314AFADCB78F7587E446 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SignalBoard;
+			packageProductDependencies = (
+			);
+			productName = SignalBoard;
+			productReference = B6D9319902B1B715E76D8B7C /* SignalBoard.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CB8D2C59EF47B0C457F07F31 /* SignalBoardTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5A3BB0B7E139CF5BEF72BDD /* Build configuration list for PBXNativeTarget "SignalBoardTests" */;
+			buildPhases = (
+				7A00C6F7873358EBB3AA2DEC /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E98190F0F202722C07B4D0FA /* PBXTargetDependency */,
+			);
+			name = SignalBoardTests;
+			packageProductDependencies = (
+			);
+			productName = SignalBoardTests;
+			productReference = EB74BF2ED1D8B0C11CDB8CC6 /* SignalBoardTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		90E5D16A9FBBA8A3E9C972D6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = 8B4FD9AB10FD49572F6911EB /* Build configuration list for PBXProject "ios-multipeerconnectivity-20260325-131224-559c6j" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = D5C7BA131AD665486DF0D530;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2FFB7DB656E5F49326C85595 /* SignalBoard */,
+				CB8D2C59EF47B0C457F07F31 /* SignalBoardTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7A00C6F7873358EBB3AA2DEC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94D531CCEBEF07A2509CE82D /* PeerBoardViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8218314AFADCB78F7587E446 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9DA6D25D4AC5A5E2587027A7 /* AppContainer.swift in Sources */,
+				E07EDBBBB0C4D107B1FDCC72 /* BoardNote.swift in Sources */,
+				1A1214CB105BF1AF958E75A5 /* IdentityStore.swift in Sources */,
+				057C17B64BFBB8CBDBA2464A /* MultipeerBoardService.swift in Sources */,
+				A056025F49B8717E54F8C23C /* PeerBoardPayload.swift in Sources */,
+				0C4EDC7CF2750A5384F8524A /* PeerBoardServicing.swift in Sources */,
+				0C525291AF0D7157A0C2794E /* PeerBoardView.swift in Sources */,
+				E86C8C56F6C62872A5A32AF9 /* PeerBoardViewModel.swift in Sources */,
+				CAE80660139AE1EAC5D0FAD3 /* PeerDevice.swift in Sources */,
+				BA7A6AE97647392A88C514E7 /* SignalBoardApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		E98190F0F202722C07B4D0FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2FFB7DB656E5F49326C85595 /* SignalBoard */;
+			targetProxy = 93343B1E78DED2437B02681A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		22A921F818902BA486DA1730 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SignalBoard.app/SignalBoard";
+			};
+			name = Release;
+		};
+		406C39CEF64485C9C67015D6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Signal Board";
+				INFOPLIST_KEY_NSBonjourServices = (
+					"_peer-board._tcp",
+				);
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Signal Board uses Multipeer Connectivity to discover and sync nearby shared notes.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryankaya.signalboard20260325131224559c6j;
+				PRODUCT_NAME = SignalBoard;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4325EBA8FA48323284F83743 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		B62A57FD95B9FAAD166B7592 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B9A7C0F7C9BB96F45577A78B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Signal Board";
+				INFOPLIST_KEY_NSBonjourServices = (
+					"_peer-board._tcp",
+				);
+				INFOPLIST_KEY_NSLocalNetworkUsageDescription = "Signal Board uses Multipeer Connectivity to discover and sync nearby shared notes.";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryankaya.signalboard20260325131224559c6j;
+				PRODUCT_NAME = SignalBoard;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C8054580BE4D334854F4F89A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SignalBoard.app/SignalBoard";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		38D2DA7A82BEEC17D9EA4E68 /* Build configuration list for PBXNativeTarget "SignalBoard" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B9A7C0F7C9BB96F45577A78B /* Debug */,
+				406C39CEF64485C9C67015D6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8B4FD9AB10FD49572F6911EB /* Build configuration list for PBXProject "ios-multipeerconnectivity-20260325-131224-559c6j" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4325EBA8FA48323284F83743 /* Debug */,
+				B62A57FD95B9FAAD166B7592 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B5A3BB0B7E139CF5BEF72BDD /* Build configuration list for PBXNativeTarget "SignalBoardTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C8054580BE4D334854F4F89A /* Debug */,
+				22A921F818902BA486DA1730 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 90E5D16A9FBBA8A3E9C972D6 /* Project object */;
+}
