@@ -1,3 +1,4 @@
 .DS_Store
 .derived-data/
 .home/
+*.xcworkspace/xcuserdata/
