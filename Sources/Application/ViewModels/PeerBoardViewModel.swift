@@ -42,6 +42,15 @@ final class PeerBoardViewModel: ObservableObject {
         !draftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
+    var shouldOfferSettingsShortcut: Bool {
+        guard let errorMessage else {
+            return false
+        }
+
+        let normalized = errorMessage.lowercased()
+        return normalized.contains("local network") || normalized.contains("bonjour")
+    }
+
     func toggleSession() {
         isRunning ? stop() : start()
     }

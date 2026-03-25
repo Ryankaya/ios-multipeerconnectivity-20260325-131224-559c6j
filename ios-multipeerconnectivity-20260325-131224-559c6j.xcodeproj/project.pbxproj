@@ -11,6 +11,7 @@
 		0C4EDC7CF2750A5384F8524A /* PeerBoardServicing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DE3E263448482AB9890DD8 /* PeerBoardServicing.swift */; };
 		0C525291AF0D7157A0C2794E /* PeerBoardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4415454B6930E056764D356 /* PeerBoardView.swift */; };
 		1A1214CB105BF1AF958E75A5 /* IdentityStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBB866205E041D068A1CD5C7 /* IdentityStore.swift */; };
+		35B8D7835E4EBE7F760D776E /* LocalNetworkAuthorizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 247ED54E792B25A11ED7E7E7 /* LocalNetworkAuthorizer.swift */; };
 		94D531CCEBEF07A2509CE82D /* PeerBoardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B94DBD45C1BB58A42917C5 /* PeerBoardViewModelTests.swift */; };
 		9DA6D25D4AC5A5E2587027A7 /* AppContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714B4BC78654E94C3413BED0 /* AppContainer.swift */; };
 		A056025F49B8717E54F8C23C /* PeerBoardPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 285892107D88275A40ECDF2F /* PeerBoardPayload.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		247ED54E792B25A11ED7E7E7 /* LocalNetworkAuthorizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNetworkAuthorizer.swift; sourceTree = "<group>"; };
 		285892107D88275A40ECDF2F /* PeerBoardPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerBoardPayload.swift; sourceTree = "<group>"; };
 		6029C3CB637AD03A8FD68232 /* BoardNote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardNote.swift; sourceTree = "<group>"; };
 		623B87FCDB46017A4F2F171B /* PeerDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeerDevice.swift; sourceTree = "<group>"; };
@@ -67,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				DBB866205E041D068A1CD5C7 /* IdentityStore.swift */,
+				247ED54E792B25A11ED7E7E7 /* LocalNetworkAuthorizer.swift */,
 				6D73AA2EF59B173725675626 /* MultipeerBoardService.swift */,
 			);
 			path = Services;
@@ -253,6 +256,7 @@
 				9DA6D25D4AC5A5E2587027A7 /* AppContainer.swift in Sources */,
 				E07EDBBBB0C4D107B1FDCC72 /* BoardNote.swift in Sources */,
 				1A1214CB105BF1AF958E75A5 /* IdentityStore.swift in Sources */,
+				35B8D7835E4EBE7F760D776E /* LocalNetworkAuthorizer.swift in Sources */,
 				057C17B64BFBB8CBDBA2464A /* MultipeerBoardService.swift in Sources */,
 				A056025F49B8717E54F8C23C /* PeerBoardPayload.swift in Sources */,
 				0C4EDC7CF2750A5384F8524A /* PeerBoardServicing.swift in Sources */,

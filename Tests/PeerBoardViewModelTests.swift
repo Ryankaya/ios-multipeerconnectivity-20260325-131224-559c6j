@@ -55,6 +55,19 @@ final class PeerBoardViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.connectedPeers, [peer])
         XCTAssertEqual(viewModel.notes, [note])
     }
+
+    func testLocalNetworkErrorOffersSettingsShortcut() {
+        let service = MockPeerBoardService()
+        let defaults = UserDefaults(suiteName: UUID().uuidString)!
+        let viewModel = PeerBoardViewModel(
+            service: service,
+            identityStore: IdentityStore(defaults: defaults)
+        )
+
+        service.emit(.error("Advertising failed because Signal Board does not currently have Bonjour/local network access."))
+
+        XCTAssertTrue(viewModel.shouldOfferSettingsShortcut)
+    }
 }
 
 private final class MockPeerBoardService: PeerBoardServicing {

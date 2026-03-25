@@ -1,5 +1,6 @@
 import Foundation
 import MultipeerConnectivity
+import Network
 
 final class MultipeerBoardService: NSObject, PeerBoardServicing {
     var onEvent: ((PeerBoardServiceEvent) -> Void)?
@@ -7,6 +8,7 @@ final class MultipeerBoardService: NSObject, PeerBoardServicing {
 
     private let workQueue = DispatchQueue(label: "com.ryankaya.signalboard.multipeer")
     private let serviceType = "peer-board"
+    private let localNetworkAuthorizer = LocalNetworkAuthorizer()
 
     private var localPeerID: MCPeerID?
     private var session: MCSession?
@@ -19,39 +21,30 @@ final class MultipeerBoardService: NSObject, PeerBoardServicing {
     func start(displayName: String) {
         workQueue.async {
             self.stopLocked(shouldEmitStatus: false)
+            self.emit(.statusChanged(
+                headline: "Preparing nearby session",
+                detail: "Checking local network access. iOS may show a permission prompt."
+            ))
 
             let localName = Self.sanitizedPeerName(from: displayName)
-            let peerID = MCPeerID(displayName: localName)
-            let session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
-            session.delegate = self
+            self.localNetworkAuthorizer.requestAuthorization(serviceType: self.serviceType) { [weak self] result in
+                guard let self else {
+                    return
+                }
 
-            let advertiser = MCNearbyServiceAdvertiser(
-                peer: peerID,
-                discoveryInfo: ["board": "signal"],
-                serviceType: self.serviceType
-            )
-            advertiser.delegate = self
-
-            let browser = MCNearbyServiceBrowser(peer: peerID, serviceType: self.serviceType)
-            browser.delegate = self
-
-            self.localPeerID = peerID
-            self.session = session
-            self.advertiser = advertiser
-            self.browser = browser
-            self.discoveredPeers = []
-            self.connectionStates = [:]
-
-            advertiser.startAdvertisingPeer()
-            browser.startBrowsingForPeers()
-
-            self.emit(.sessionChanged(isRunning: true, localPeerName: localName))
-            self.emit(.statusChanged(
-                headline: "Nearby board is live",
-                detail: "Browsing and advertising for nearby collaborators."
-            ))
-            self.emit(.notesChanged(self.sortedNotesLocked()))
-            self.emitPeerListsLocked()
+                self.workQueue.async {
+                    switch result {
+                    case .success:
+                        self.beginSessionLocked(localName: localName)
+                    case .failure(let error):
+                        self.emit(.statusChanged(
+                            headline: "Local network access needed",
+                            detail: "Allow Signal Board to use the local network so nearby discovery can start."
+                        ))
+                        self.emit(.error(Self.errorMessage(for: error, activity: "Advertising")))
+                    }
+                }
+            }
         }
     }
 
@@ -92,6 +85,7 @@ final class MultipeerBoardService: NSObject, PeerBoardServicing {
     }
 
     private func stopLocked(shouldEmitStatus: Bool) {
+        localNetworkAuthorizer.cancel()
         advertiser?.stopAdvertisingPeer()
         browser?.stopBrowsingForPeers()
         session?.disconnect()
@@ -116,6 +110,40 @@ final class MultipeerBoardService: NSObject, PeerBoardServicing {
                 detail: "Your notes stay local until you go live again."
             ))
         }
+    }
+
+    private func beginSessionLocked(localName: String) {
+        let peerID = MCPeerID(displayName: localName)
+        let session = MCSession(peer: peerID, securityIdentity: nil, encryptionPreference: .required)
+        session.delegate = self
+
+        let advertiser = MCNearbyServiceAdvertiser(
+            peer: peerID,
+            discoveryInfo: ["board": "signal"],
+            serviceType: serviceType
+        )
+        advertiser.delegate = self
+
+        let browser = MCNearbyServiceBrowser(peer: peerID, serviceType: serviceType)
+        browser.delegate = self
+
+        localPeerID = peerID
+        self.session = session
+        self.advertiser = advertiser
+        self.browser = browser
+        discoveredPeers = []
+        connectionStates = [:]
+
+        advertiser.startAdvertisingPeer()
+        browser.startBrowsingForPeers()
+
+        emit(.sessionChanged(isRunning: true, localPeerName: localName))
+        emit(.statusChanged(
+            headline: "Nearby board is live",
+            detail: "Browsing and advertising for nearby collaborators."
+        ))
+        emit(.notesChanged(sortedNotesLocked()))
+        emitPeerListsLocked()
     }
 
     private func mergeNotesLocked(_ incomingNotes: [BoardNote]) {
@@ -236,11 +264,24 @@ final class MultipeerBoardService: NSObject, PeerBoardServicing {
     private static func errorMessage(for error: Error, activity: String) -> String {
         let nsError = error as NSError
 
-        if nsError.domain == NetService.errorDomain, nsError.code == -72008 {
-            return "\(activity) failed because iOS blocked local network Bonjour access. Reinstall the app or enable Signal Board in Settings > Privacy & Security > Local Network, then try again."
+        if isLocalNetworkPermissionError(error) {
+            return "\(activity) failed because Signal Board does not currently have Bonjour/local network access. Tap Settings below to enable Local Network. If the toggle is missing, delete and reinstall the app, then try Go Live again."
         }
 
         return "\(activity) failed (\(nsError.domain) \(nsError.code)): \(nsError.localizedDescription)"
+    }
+
+    private static func isLocalNetworkPermissionError(_ error: Error) -> Bool {
+        let nsError = error as NSError
+        if nsError.domain == NetService.errorDomain, nsError.code == -72008 {
+            return true
+        }
+
+        if let nwError = error as? NWError, case .dns(let dnsError) = nwError {
+            return Int(dnsError) == -65570
+        }
+
+        return false
     }
 }
 

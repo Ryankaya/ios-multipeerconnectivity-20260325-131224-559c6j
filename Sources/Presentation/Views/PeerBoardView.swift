@@ -1,6 +1,8 @@
 import SwiftUI
+import UIKit
 
 struct PeerBoardView: View {
+    @Environment(\.openURL) private var openURL
     @StateObject private var viewModel: PeerBoardViewModel
 
     private let columns = [
@@ -26,7 +28,13 @@ struct PeerBoardView: View {
             .navigationTitle("Signal Board")
         }
         .alert("Signal Board", isPresented: errorBinding) {
-            Button("OK") {
+            if viewModel.shouldOfferSettingsShortcut {
+                Button("Settings") {
+                    openSettings()
+                }
+            }
+
+            Button("OK", role: .cancel) {
                 viewModel.dismissError()
             }
         } message: {
@@ -40,15 +48,15 @@ struct PeerBoardView: View {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Nearby shared notes")
                         .font(.system(size: 34, weight: .bold, design: .serif))
-                        .foregroundStyle(Color.ink)
+                        .foregroundStyle(Color.textPrimary)
 
                     Text(viewModel.statusHeadline)
                         .font(.headline)
-                        .foregroundStyle(Color.ink.opacity(0.9))
+                        .foregroundStyle(Color.textPrimary)
 
                     Text(viewModel.statusDetail)
                         .font(.subheadline)
-                        .foregroundStyle(Color.ink.opacity(0.7))
+                        .foregroundStyle(Color.textSecondary)
                 }
 
                 Spacer()
@@ -59,15 +67,17 @@ struct PeerBoardView: View {
             VStack(alignment: .leading, spacing: 10) {
                 Text("Display name")
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(Color.ink.opacity(0.7))
+                    .foregroundStyle(Color.textSecondary)
 
                 TextField("Your nearby alias", text: $viewModel.displayName)
                     .textInputAutocapitalization(.words)
+                    .foregroundStyle(Color.textPrimary)
+                    .tint(Color.controlInk)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 14)
                     .background(
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .fill(Color.white.opacity(0.78))
+                            .fill(Color.inputSurface)
                     )
             }
 
@@ -84,9 +94,9 @@ struct PeerBoardView: View {
                     .padding(.vertical, 15)
                     .background(
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
-                            .fill(viewModel.isRunning ? Color.ink : Color.sunrise)
+                            .fill(viewModel.isRunning ? Color.controlInk : Color.sunrise)
                     )
-                    .foregroundStyle(viewModel.isRunning ? Color.paper : Color.ink)
+                    .foregroundStyle(viewModel.isRunning ? Color.onControlInk : Color.onAccent)
             }
             .disabled(!viewModel.isSupported)
             .opacity(viewModel.isSupported ? 1 : 0.55)
@@ -96,7 +106,7 @@ struct PeerBoardView: View {
             RoundedRectangle(cornerRadius: 32, style: .continuous)
                 .fill(
                     LinearGradient(
-                        colors: [Color.paper, Color.peach],
+                        colors: [Color.surface, Color.heroAccent],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
@@ -104,7 +114,7 @@ struct PeerBoardView: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 32, style: .continuous)
-                .stroke(Color.white.opacity(0.4), lineWidth: 1)
+                .stroke(Color.surfaceStroke, lineWidth: 1)
         )
     }
 
@@ -112,18 +122,20 @@ struct PeerBoardView: View {
         VStack(alignment: .leading, spacing: 14) {
             Label("Compose a board card", systemImage: "square.and.pencil")
                 .font(.headline)
-                .foregroundStyle(Color.ink)
+                .foregroundStyle(Color.textPrimary)
 
             Text(viewModel.composerHint)
                 .font(.subheadline)
-                .foregroundStyle(Color.ink.opacity(0.7))
+                .foregroundStyle(Color.textSecondary)
 
             TextEditor(text: $viewModel.draftText)
+                .foregroundStyle(Color.textPrimary)
+                .tint(Color.controlInk)
                 .frame(minHeight: 130)
                 .padding(12)
                 .background(
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
-                        .fill(Color.white.opacity(0.82))
+                        .fill(Color.inputSurface)
                 )
                 .scrollContentBackground(.hidden)
 
@@ -136,7 +148,7 @@ struct PeerBoardView: View {
                         RoundedRectangle(cornerRadius: 18, style: .continuous)
                             .fill(Color.mintLeaf)
                     )
-                    .foregroundStyle(Color.ink)
+                    .foregroundStyle(Color.onAccent)
             }
             .disabled(!viewModel.canPost)
             .opacity(viewModel.canPost ? 1 : 0.55)
@@ -149,12 +161,12 @@ struct PeerBoardView: View {
         VStack(alignment: .leading, spacing: 16) {
             Label("Nearby collaborators", systemImage: "person.3.sequence.fill")
                 .font(.headline)
-                .foregroundStyle(Color.ink)
+                .foregroundStyle(Color.textPrimary)
 
             if viewModel.connectedPeers.isEmpty {
                 Text("No live collaborators yet. Start your session, then invite someone on the same local network.")
                     .font(.subheadline)
-                    .foregroundStyle(Color.ink.opacity(0.7))
+                    .foregroundStyle(Color.textSecondary)
             } else {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 10) {
@@ -170,17 +182,17 @@ struct PeerBoardView: View {
             if viewModel.discoveredPeers.isEmpty {
                 Text("No discoverable peers are visible right now.")
                     .font(.subheadline)
-                    .foregroundStyle(Color.ink.opacity(0.7))
+                    .foregroundStyle(Color.textSecondary)
             } else {
                 ForEach(viewModel.discoveredPeers) { peer in
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text(peer.displayName)
                                 .font(.headline)
-                                .foregroundStyle(Color.ink)
+                                .foregroundStyle(Color.textPrimary)
                             Text(peer.state == .connecting ? "Connecting..." : "Available to invite")
                                 .font(.caption)
-                                .foregroundStyle(Color.ink.opacity(0.65))
+                                .foregroundStyle(Color.textSecondary)
                         }
 
                         Spacer()
@@ -203,16 +215,16 @@ struct PeerBoardView: View {
         VStack(alignment: .leading, spacing: 16) {
             Label("Shared board", systemImage: "rectangle.grid.2x2.fill")
                 .font(.headline)
-                .foregroundStyle(Color.ink)
+                .foregroundStyle(Color.textPrimary)
 
             if viewModel.notes.isEmpty {
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Your board is empty.")
                         .font(.title3.weight(.semibold))
-                        .foregroundStyle(Color.ink)
+                        .foregroundStyle(Color.textPrimary)
                     Text("Post the first note to seed the board, then invite nearby peers to turn it into a live collaboration wall.")
                         .font(.subheadline)
-                        .foregroundStyle(Color.ink.opacity(0.7))
+                        .foregroundStyle(Color.textSecondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(22)
@@ -234,25 +246,25 @@ struct PeerBoardView: View {
             .padding(.vertical, 8)
             .background(
                 Capsule(style: .continuous)
-                    .fill(viewModel.isRunning ? Color.mintLeaf : Color.ink)
+                    .fill(viewModel.isRunning ? Color.mintLeaf : Color.controlInk)
             )
-            .foregroundStyle(viewModel.isRunning ? Color.ink : Color.paper)
+            .foregroundStyle(viewModel.isRunning ? Color.onAccent : Color.onControlInk)
     }
 
     private func metricCard(title: String, value: String) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             Text(title.uppercased())
                 .font(.caption2.weight(.bold))
-                .foregroundStyle(Color.ink.opacity(0.55))
+                .foregroundStyle(Color.textTertiary)
             Text(value)
                 .font(.system(size: 26, weight: .bold, design: .rounded))
-                .foregroundStyle(Color.ink)
+                .foregroundStyle(Color.textPrimary)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)
         .background(
             RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .fill(Color.white.opacity(0.72))
+                .fill(Color.metricSurface)
         )
     }
 
@@ -265,7 +277,7 @@ struct PeerBoardView: View {
                 Capsule(style: .continuous)
                     .fill(color.opacity(0.95))
             )
-            .foregroundStyle(Color.ink)
+            .foregroundStyle(Color.onAccent)
     }
 
     private func noteCard(_ note: BoardNote) -> some View {
@@ -273,16 +285,16 @@ struct PeerBoardView: View {
             HStack {
                 Text(note.authorName)
                     .font(.caption.weight(.bold))
-                    .foregroundStyle(Color.ink.opacity(0.65))
+                    .foregroundStyle(Color.noteMeta)
                 Spacer()
                 Text(note.createdAt.formatted(.relative(presentation: .named)))
                     .font(.caption2)
-                    .foregroundStyle(Color.ink.opacity(0.55))
+                    .foregroundStyle(Color.noteMeta)
             }
 
             Text(note.text)
                 .font(.body.weight(.medium))
-                .foregroundStyle(Color.ink)
+                .foregroundStyle(Color.noteText)
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             Spacer(minLength: 0)
@@ -295,9 +307,17 @@ struct PeerBoardView: View {
         )
         .overlay(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .stroke(Color.white.opacity(0.35), lineWidth: 1)
+                .stroke(Color.surfaceStroke, lineWidth: 1)
         )
         .shadow(color: Color.black.opacity(0.05), radius: 18, x: 0, y: 10)
+    }
+
+    private func openSettings() {
+        guard let settingsURL = URL(string: UIApplication.openSettingsURLString) else {
+            return
+        }
+
+        openURL(settingsURL)
     }
 
     private var errorBinding: Binding<Bool> {
@@ -333,10 +353,10 @@ struct PeerBoardView: View {
 
     private var cardBackground: some View {
         RoundedRectangle(cornerRadius: 28, style: .continuous)
-            .fill(Color.paper.opacity(0.94))
+            .fill(Color.surface)
             .overlay(
                 RoundedRectangle(cornerRadius: 28, style: .continuous)
-                    .stroke(Color.white.opacity(0.4), lineWidth: 1)
+                    .stroke(Color.surfaceStroke, lineWidth: 1)
             )
     }
 }
@@ -357,13 +377,88 @@ private extension NoteTint {
 }
 
 private extension Color {
-    static let canvasTop = Color(red: 0.96, green: 0.92, blue: 0.83)
-    static let canvasBottom = Color(red: 0.87, green: 0.82, blue: 0.75)
-    static let paper = Color(red: 0.99, green: 0.97, blue: 0.92)
-    static let peach = Color(red: 0.98, green: 0.87, blue: 0.76)
-    static let sunrise = Color(red: 0.96, green: 0.74, blue: 0.41)
-    static let mintLeaf = Color(red: 0.68, green: 0.85, blue: 0.71)
-    static let coral = Color(red: 0.93, green: 0.60, blue: 0.51)
-    static let sky = Color(red: 0.67, green: 0.82, blue: 0.92)
-    static let ink = Color(red: 0.23, green: 0.20, blue: 0.18)
+    static let canvasTop = adaptive(
+        light: UIColor(red: 0.96, green: 0.92, blue: 0.83, alpha: 1),
+        dark: UIColor(red: 0.09, green: 0.11, blue: 0.14, alpha: 1)
+    )
+    static let canvasBottom = adaptive(
+        light: UIColor(red: 0.87, green: 0.82, blue: 0.75, alpha: 1),
+        dark: UIColor(red: 0.14, green: 0.12, blue: 0.10, alpha: 1)
+    )
+    static let surface = adaptive(
+        light: UIColor(red: 0.99, green: 0.97, blue: 0.92, alpha: 0.94),
+        dark: UIColor(red: 0.16, green: 0.17, blue: 0.19, alpha: 0.96)
+    )
+    static let heroAccent = adaptive(
+        light: UIColor(red: 0.98, green: 0.87, blue: 0.76, alpha: 1),
+        dark: UIColor(red: 0.23, green: 0.19, blue: 0.16, alpha: 1)
+    )
+    static let sunrise = adaptive(
+        light: UIColor(red: 0.96, green: 0.74, blue: 0.41, alpha: 1),
+        dark: UIColor(red: 0.63, green: 0.43, blue: 0.18, alpha: 1)
+    )
+    static let mintLeaf = adaptive(
+        light: UIColor(red: 0.68, green: 0.85, blue: 0.71, alpha: 1),
+        dark: UIColor(red: 0.24, green: 0.42, blue: 0.31, alpha: 1)
+    )
+    static let coral = adaptive(
+        light: UIColor(red: 0.93, green: 0.60, blue: 0.51, alpha: 1),
+        dark: UIColor(red: 0.49, green: 0.27, blue: 0.24, alpha: 1)
+    )
+    static let sky = adaptive(
+        light: UIColor(red: 0.67, green: 0.82, blue: 0.92, alpha: 1),
+        dark: UIColor(red: 0.24, green: 0.34, blue: 0.47, alpha: 1)
+    )
+    static let inputSurface = adaptive(
+        light: UIColor(white: 1.0, alpha: 0.82),
+        dark: UIColor(red: 0.23, green: 0.24, blue: 0.27, alpha: 1)
+    )
+    static let metricSurface = adaptive(
+        light: UIColor(white: 1.0, alpha: 0.72),
+        dark: UIColor(red: 0.21, green: 0.22, blue: 0.25, alpha: 1)
+    )
+    static let surfaceStroke = adaptive(
+        light: UIColor(white: 1.0, alpha: 0.40),
+        dark: UIColor(white: 1.0, alpha: 0.10)
+    )
+    static let controlInk = adaptive(
+        light: UIColor(red: 0.23, green: 0.20, blue: 0.18, alpha: 1),
+        dark: UIColor(red: 0.08, green: 0.09, blue: 0.11, alpha: 1)
+    )
+    static let onControlInk = adaptive(
+        light: UIColor(red: 0.99, green: 0.97, blue: 0.92, alpha: 1),
+        dark: UIColor(red: 0.97, green: 0.95, blue: 0.90, alpha: 1)
+    )
+    static let onAccent = adaptive(
+        light: UIColor(red: 0.23, green: 0.20, blue: 0.18, alpha: 1),
+        dark: UIColor(red: 0.97, green: 0.95, blue: 0.90, alpha: 1)
+    )
+    static let textPrimary = adaptive(
+        light: UIColor(red: 0.23, green: 0.20, blue: 0.18, alpha: 1),
+        dark: UIColor(red: 0.97, green: 0.95, blue: 0.90, alpha: 1)
+    )
+    static let textSecondary = adaptive(
+        light: UIColor(red: 0.23, green: 0.20, blue: 0.18, alpha: 0.72),
+        dark: UIColor(red: 0.90, green: 0.88, blue: 0.84, alpha: 1)
+    )
+    static let textTertiary = adaptive(
+        light: UIColor(red: 0.23, green: 0.20, blue: 0.18, alpha: 0.58),
+        dark: UIColor(red: 0.76, green: 0.74, blue: 0.70, alpha: 1)
+    )
+    static let noteText = adaptive(
+        light: UIColor(red: 0.23, green: 0.20, blue: 0.18, alpha: 1),
+        dark: UIColor(red: 0.97, green: 0.95, blue: 0.92, alpha: 1)
+    )
+    static let noteMeta = adaptive(
+        light: UIColor(red: 0.23, green: 0.20, blue: 0.18, alpha: 0.65),
+        dark: UIColor(red: 0.92, green: 0.90, blue: 0.86, alpha: 0.78)
+    )
+
+    private static func adaptive(light: UIColor, dark: UIColor) -> Color {
+        Color(
+            uiColor: UIColor { traitCollection in
+                traitCollection.userInterfaceStyle == .dark ? dark : light
+            }
+        )
+    }
 }
