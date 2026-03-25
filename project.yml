@@ -11,11 +11,11 @@ targets:
       - path: Sources
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.ryankaya.signalboard20260325131224559c6j
+        PRODUCT_BUNDLE_IDENTIFIER: com.ryankaya.signalboardfresh20260325131224559c6j
         PRODUCT_NAME: SignalBoard
         SWIFT_VERSION: 5.0
         GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_CFBundleDisplayName: Signal Board
+        INFOPLIST_KEY_CFBundleDisplayName: Signal Board Fresh
         INFOPLIST_KEY_UIApplicationSceneManifest_Generation: YES
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_NSLocalNetworkUsageDescription: Signal Board uses Multipeer Connectivity to discover and sync nearby shared notes.

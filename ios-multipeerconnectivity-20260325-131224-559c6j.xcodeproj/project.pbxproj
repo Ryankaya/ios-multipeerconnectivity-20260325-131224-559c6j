@@ -302,7 +302,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Signal Board";
+				INFOPLIST_KEY_CFBundleDisplayName = "Signal Board Fresh";
 				INFOPLIST_KEY_NSBonjourServices = (
 					"_peer-board._tcp",
 					"_peer-board._udp",
@@ -315,7 +315,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryankaya.signalboard20260325131224559c6j;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryankaya.signalboardfresh20260325131224559c6j;
 				PRODUCT_NAME = SignalBoard;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -446,7 +446,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "Signal Board";
+				INFOPLIST_KEY_CFBundleDisplayName = "Signal Board Fresh";
 				INFOPLIST_KEY_NSBonjourServices = (
 					"_peer-board._tcp",
 					"_peer-board._udp",
@@ -459,7 +459,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ryankaya.signalboard20260325131224559c6j;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ryankaya.signalboardfresh20260325131224559c6j;
 				PRODUCT_NAME = SignalBoard;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
