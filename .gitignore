@@ -2,3 +2,4 @@
 .derived-data/
 .home/
 *.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
