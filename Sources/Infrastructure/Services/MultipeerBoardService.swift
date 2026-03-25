@@ -265,7 +265,7 @@ final class MultipeerBoardService: NSObject, PeerBoardServicing {
         let nsError = error as NSError
 
         if isLocalNetworkPermissionError(error) {
-            return "Signal Board cannot start nearby sharing until iOS grants Local Network access. Tap Settings below and enable Local Network. If Signal Board still does not appear there, delete the app, reinstall it, and tap Go Live Nearby again to force the permission prompt."
+            return "Signal Board cannot start nearby sharing until iOS grants Local Network access. The Local Network toggle is in Settings > Privacy & Security > Local Network, not on the app's own settings page. If Signal Board is missing from that list even after tapping Go Live Nearby, reset the privacy state with Settings > General > Transfer or Reset iPhone > Reset > Reset Location & Privacy, then reopen the app and try again."
         }
 
         return "\(activity) failed (\(nsError.domain) \(nsError.code)): \(nsError.localizedDescription)"
